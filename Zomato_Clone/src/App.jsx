@@ -5,7 +5,7 @@ import Header from "./pages/Header";
 
 const Footer = () => (
   <footer className="bg-gray-800 text-white p-4 text-center text-sm mt-4">
-    &copy; 2025 Zomato. All rights reserved.
+     Thank You.!!!!
   </footer>
 );
 

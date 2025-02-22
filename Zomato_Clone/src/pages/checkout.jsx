@@ -43,12 +43,12 @@ const Checkout = () => {
                 className="flex justify-between items-center p-2 border-b"
               >
                 <span>{item.name}</span>
-                <span className="font-bold">${item.price.toFixed(2)}</span>
+                <span className="font-bold">₹{item.price.toFixed(2)}</span>
               </div>
             ))}
             <div className="flex justify-between mt-4 text-xl font-bold">
               <span>Total:</span>
-              <span className="text-green-600">${totalAmount.toFixed(2)}</span>
+              <span className="text-green-600">₹{totalAmount.toFixed(2)}</span>
             </div>
           </div>
         ) : (

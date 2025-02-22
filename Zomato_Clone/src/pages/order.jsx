@@ -3,9 +3,7 @@ import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 
 const orders = [
-  { id: 1, restaurant: "Pizza Palace", items: ["Pepperoni Pizza", "Garlic Bread"], total: "$25.99" },
-  { id: 2, restaurant: "Burger Hub", items: ["Cheeseburger", "Fries"], total: "$15.49" },
-  { id: 3, restaurant: "Sushi Delight", items: ["Salmon Sushi", "Miso Soup"], total: "$30.99" },
+
 ];
 
 const Orders = () => {
