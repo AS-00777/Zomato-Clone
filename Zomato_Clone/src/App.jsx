@@ -4,10 +4,11 @@ import Header from "./pages/Header";
 
 
 const Footer = () => (
-  <footer className="bg-gray-800 text-white p-4 text-center text-sm mt-4">
-     Thank You.!!!!
+  <footer className="bg-red-500 text-white p-4 text-center text-lg font-bold mt-4">
+     Vist us Again Thank You.!!!!🤩
   </footer>
 );
+
 
 const App = () => {
   return (
