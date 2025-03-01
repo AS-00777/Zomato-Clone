@@ -3,6 +3,21 @@ import { FaTrash, FaShoppingCart } from "react-icons/fa";
 import { Link } from "react-router-dom";
 
 const Cart = () => {
+  const handleCheckout = async () => {
+    try {
+      const response = await axios.post('/api/cart/checkout', { userId: 'USER_ID' }); // Replace 'USER_ID' with actual user ID
+      console.log('Order placed:', response.data);
+      // Clear the cart and redirect to orders page
+      localStorage.removeItem("cart");
+      setCartItems([]);
+      // Redirect to orders page (you may need to use history.push or navigate)
+      window.location.href = '/orders'; // Adjust as necessary
+    } catch (error) {
+      console.error('Error placing order:', error);
+    }
+  };
+
+
   const [cartItems, setCartItems] = useState([]);
 
   useEffect(() => {
@@ -61,7 +76,14 @@ const Cart = () => {
           </div>
 
           <div className="mt-6 text-center">
+            {/* <button
+              onClick={handleCheckout}
+              className="w-full bg-green-500 text-white py-3 rounded-lg text-lg font-semibold hover:bg-green-600 transition duration-300 inline-block"
+            >
+              Place Order
+            </button> */}
             <Link
+
               to="/checkout"
               className="w-full bg-green-500 text-white py-3 rounded-lg text-lg font-semibold hover:bg-green-600 transition duration-300 inline-block"
             >

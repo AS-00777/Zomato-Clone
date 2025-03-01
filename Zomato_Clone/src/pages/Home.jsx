@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import { FaSearch, FaShoppingCart } from "react-icons/fa"; // Import icons
 import { motion } from "framer-motion"; // For animations
+import axios from 'axios';
+
 
 const foodItems = [
   { id: 1, name: "Burger", price: 199, image: "https://plus.unsplash.com/premium_photo-1684534125661-614f59f16f2e?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8YnVyZ2Vyc3xlbnwwfHwwfHx8MA%3D%3D" },
@@ -19,6 +21,7 @@ const foodItems = [
   { id: 14, name: "Pav Bhaji", price: 179, image: "https://media.istockphoto.com/id/1327433011/photo/pav-bhaji-indian-street-food-bharuch-gujarat-india.jpg?s=612x612&w=0&k=20&c=R_Nl3Ig6qTNMidQkjXH0It8MINDJY-C5GMiIv-HxO04=" },
   { id: 15, name: "Chole Bhature", price: 199, image: "https://t4.ftcdn.net/jpg/07/54/78/25/360_F_754782526_PlvME8TT9ONtd9ZnWo7uEai6GO1q5Yoi.jpg" }
 ];
+
 
 const Home = () => {
   const [searchTerm, setSearchTerm] = useState("");
