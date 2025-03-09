@@ -21,9 +21,25 @@ const Checkout = () => {
   };
 
   const handlePlaceOrder = () => {
-    alert("Order placed successfully! 🎉");
+    if (!formData.name || !formData.address || !formData.email || !formData.phone) {
+      alert("Please fill in all fields before placing an order.");
+      return;
+    }
+
+    const newOrder = {
+      id: Date.now(),
+      items: cartItems,
+      total: totalAmount,
+      customer: formData,
+      date: new Date().toLocaleString(),
+    };
+
+    const existingOrders = JSON.parse(localStorage.getItem("orders")) || [];
+    localStorage.setItem("orders", JSON.stringify([...existingOrders, newOrder]));
+
     localStorage.removeItem("cart"); // Clear cart after order
     setCartItems([]);
+    alert("Order placed successfully! 🎉");
   };
 
   return (

@@ -1,23 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { FaTrash, FaShoppingCart } from "react-icons/fa";
 import { Link } from "react-router-dom";
+import { motion } from "framer-motion";
 
 const Cart = () => {
-  const handleCheckout = async () => {
-    try {
-      const response = await axios.post('/api/cart/checkout', { userId: 'USER_ID' }); // Replace 'USER_ID' with actual user ID
-      console.log('Order placed:', response.data);
-      // Clear the cart and redirect to orders page
-      localStorage.removeItem("cart");
-      setCartItems([]);
-      // Redirect to orders page (you may need to use history.push or navigate)
-      window.location.href = '/orders'; // Adjust as necessary
-    } catch (error) {
-      console.error('Error placing order:', error);
-    }
-  };
-
-
   const [cartItems, setCartItems] = useState([]);
 
   useEffect(() => {
@@ -25,21 +11,47 @@ const Cart = () => {
     setCartItems(savedCart);
   }, []);
 
-  const removeFromCart = (index) => {
-    let updatedCart = [...cartItems];
-    updatedCart.splice(index, 1);
+  const updateCart = (updatedCart) => {
     setCartItems(updatedCart);
     localStorage.setItem("cart", JSON.stringify(updatedCart));
   };
 
-  const totalAmount = cartItems.reduce((acc, item) => acc + item.price, 0);
+  const removeFromCart = (index) => {
+    let updatedCart = [...cartItems];
+    updatedCart.splice(index, 1);
+    updateCart(updatedCart);
+  };
+
+  const increaseQuantity = (index) => {
+    let updatedCart = [...cartItems];
+    updatedCart[index].quantity = (updatedCart[index].quantity || 1) + 1;
+    updateCart(updatedCart);
+  };
+
+  const decreaseQuantity = (index) => {
+    let updatedCart = [...cartItems];
+    if (updatedCart[index].quantity > 1) {
+      updatedCart[index].quantity -= 1;
+      updateCart(updatedCart);
+    } else {
+      removeFromCart(index);
+    }
+  };
+  const totalAmount = cartItems.reduce(
+    (acc, item) => acc + item.price * (item.quantity || 1),
+    0
+  );
 
   return (
     <div className="min-h-screen bg-gray-100 py-10 px-6">
-      <h1 className="text-4xl font-extrabold text-red-500 text-center mb-6">
+      <motion.h1
+        className="text-4xl font-extrabold text-red-500 text-center mb-6"
+        initial={{ opacity: 0, y: -20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5 }}
+      >
         Your Cart <FaShoppingCart className="inline-block ml-2" />
-      </h1>
-
+      </motion.h1>
       {cartItems.length > 0 ? (
         <div className="max-w-3xl mx-auto bg-white p-6 rounded-xl shadow-lg">
           {cartItems.map((item, index) => (
@@ -53,8 +65,26 @@ const Cart = () => {
                 className="w-16 h-16 object-cover rounded-md"
               />
               <h2 className="text-lg font-semibold">{item.name}</h2>
+
+              {/* Quantity Controls */}
+              <div className="flex items-center gap-2">
+                <button
+                  className="bg-gray-300 text-black px-2 py-1 rounded-md text-sm hover:bg-gray-400 transition"
+                  onClick={() => decreaseQuantity(index)}
+                >
+                  -
+                </button>
+                <span className="text-lg font-bold">{item.quantity || 1}</span>
+                <button
+                  className="bg-gray-300 text-black px-2 py-1 rounded-md text-sm hover:bg-gray-400 transition"
+                  onClick={() => increaseQuantity(index)}
+                >
+                  +
+                </button>
+              </div>
+
               <p className="text-gray-700 font-bold">
-                ₹{item.price.toFixed(2)}
+                ₹{(item.price * (item.quantity || 1)).toFixed(2)}
               </p>
 
               {/* Remove Item Button */}
@@ -76,14 +106,7 @@ const Cart = () => {
           </div>
 
           <div className="mt-6 text-center">
-            {/* <button
-              onClick={handleCheckout}
-              className="w-full bg-green-500 text-white py-3 rounded-lg text-lg font-semibold hover:bg-green-600 transition duration-300 inline-block"
-            >
-              Place Order
-            </button> */}
             <Link
-
               to="/checkout"
               className="w-full bg-green-500 text-white py-3 rounded-lg text-lg font-semibold hover:bg-green-600 transition duration-300 inline-block"
             >

@@ -1,15 +1,18 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 
-const orders = [
-
-];
-
 const Orders = () => {
+  const [orders, setOrders] = useState([]);
+
+  useEffect(() => {
+    const savedOrders = JSON.parse(localStorage.getItem("orders")) || [];
+    setOrders(savedOrders);
+  }, []);
+
   return (
     <div className="min-h-screen bg-gray-100 py-10 px-6">
-      <motion.h1 
+      <motion.h1
         className="text-4xl font-bold text-center text-red-500 mb-8"
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
@@ -27,16 +30,14 @@ const Orders = () => {
               whileHover={{ scale: 1.02 }}
             >
               <div>
-                <h2 className="text-lg font-semibold">{order.restaurant}</h2>
-                <p className="text-gray-600">Items: {order.items.join(", ")}</p>
-                <p className="text-gray-800 font-bold">{order.total}</p>
+                <h2 className="text-lg font-semibold">Order ID: {order.id}</h2>
+                <p className="text-gray-600">
+                  Items: {order.items.map((item) => item.name).join(", ")}
+                </p>
+                <p className="text-gray-800 font-bold">Total: ₹{order.total.toFixed(2)}</p>
+                <p className="text-gray-500 text-sm">Placed on: {order.date}</p>
               </div>
-              <Link
-                to={`/orders/${order.id}`}
-                className="text-red-500 font-semibold hover:underline"
-              >
-                View Details
-              </Link>
+             
             </motion.div>
           ))
         ) : (

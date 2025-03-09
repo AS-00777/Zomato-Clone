@@ -2,7 +2,6 @@ import dotenv from "dotenv";
 import express from "express";
 import cors from "cors";
 import mongoose from "mongoose";
-
 import authRoutes from "./routes/authRoutes.js"; // Ensure correct file extension
 import cartRoutes from "./routes/cartRoutes.js";
 import orderRoutes from "./routes/orderRoutes.js";
@@ -10,11 +9,12 @@ import orderRoutes from "./routes/orderRoutes.js";
 dotenv.config(); // Load environment variables
 
 const app = express();
-const PORT = process.env.PORT || 5001; // Changed port to 5001
+const PORT = process.env.PORT || 4000;
 
 // Middleware
 app.use(express.json());
-app.use(cors());
+app.use(cors({ origin: "http://localhost:5173", credentials: true }));
+
 
 // Connect to MongoDB
 mongoose

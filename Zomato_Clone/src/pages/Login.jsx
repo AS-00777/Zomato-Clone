@@ -10,15 +10,19 @@ const Login = () => {
 
   const handleLogin = (e) => {
     e.preventDefault();
-    if (email) {
-      localStorage.setItem("userInitial", email.charAt(0).toUpperCase());
-      navigate("/");
+    if (email && password) {
+      localStorage.setItem("UserToken", "logged_in"); // Store login token
+      localStorage.setItem("UserEmail", email);
+      navigate("/"); // Redirect to home after login
+    } else {
+      alert("Please enter valid email and password");
     }
   };
 
+ 
   return (
     <div className="flex items-center justify-center min-h-screen bg-gradient-to-r from-red-400 to-pink-500 px-4 sm:px-6 lg:px-8">
-      <h1 className="text-6xl text-white absolute top-4">Zomato</h1>
+      <h1 className="text-6xl text-white absolute top-4">Zomato_Clone</h1>
       <div className="bg-white p-8 rounded-2xl shadow-2xl w-full max-w-md">
         <h2 className="text-3xl font-bold text-center text-red-500 mb-6">
           {isLogin ? "Welcome Back!" : "Join Us Today!"}

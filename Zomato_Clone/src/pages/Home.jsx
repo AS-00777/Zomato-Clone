@@ -19,7 +19,8 @@ const foodItems = [
   { id: 12, name: "Momos", price: 129, image: "https://media.istockphoto.com/id/1252605699/photo/veg-momos-on-black-slate-table-top-momos-is-the-popular-dish-of-indian-tibetan-chinese.jpg?s=612x612&w=0&k=20&c=-K4xCgsFxgv0OnSf9Omp8w06eoTE4_6b30pO12b6d9o=" },
   { id: 13, name: "Samosa", price: 49, image: "https://t4.ftcdn.net/jpg/07/67/68/59/360_F_767685963_MoLx5Lh7Hw9WwcDb5Y3s54IWTXk6Q0ti.jpg" },
   { id: 14, name: "Pav Bhaji", price: 179, image: "https://media.istockphoto.com/id/1327433011/photo/pav-bhaji-indian-street-food-bharuch-gujarat-india.jpg?s=612x612&w=0&k=20&c=R_Nl3Ig6qTNMidQkjXH0It8MINDJY-C5GMiIv-HxO04=" },
-  { id: 15, name: "Chole Bhature", price: 199, image: "https://t4.ftcdn.net/jpg/07/54/78/25/360_F_754782526_PlvME8TT9ONtd9ZnWo7uEai6GO1q5Yoi.jpg" }
+  { id: 15, name: "Chole Bhature", price: 199, image: "https://t4.ftcdn.net/jpg/07/54/78/25/360_F_754782526_PlvME8TT9ONtd9ZnWo7uEai6GO1q5Yoi.jpg" },
+  { id: 16, name: "Fish Fry", price: 300, image: "https://media.istockphoto.com/id/980462262/photo/tasty-grilled-fish.jpg?s=612x612&w=0&k=20&c=e6m9uJ3mKotLv5x8lZjMqLklA8cM4bl1qJtMwdlCnq8=" }
 ];
 
 
@@ -38,7 +39,19 @@ const Home = () => {
     localStorage.setItem("cart", JSON.stringify(cart)); // Save back to localStorage
     alert(`${food.name} added to cart!`);
   };
-  
+  const handleOrder = () => {
+  const userToken = localStorage.getItem("UserToken");
+
+  if (!userToken) {
+    alert("You must log in before ordering food!");
+    navigate("/login"); // Redirect to login
+    return;
+  }
+
+  // Proceed with ordering logic
+  console.log("Order placed successfully!");
+};
+
   return (
     <div className="min-h-screen bg-gray-50 flex flex-col items-center py-10 px-4">
       {/* Heading */}
@@ -65,7 +78,8 @@ const Home = () => {
 
       {/* Food Item Grid */}
       <motion.div
-        className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 w-full max-w-4xl"
+        // className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 w-full max-w-4xl"
+         className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-4 gap-6 w-full px-6"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ duration: 0.5 }}

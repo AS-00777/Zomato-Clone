@@ -10,8 +10,8 @@ router.post("/signup", async (req, res) => {
     try {
         console.log("Signup API Hit:", req.body); // Debugging
 
-        const { email, password } = req.body;
-        if (!email || !password) {
+        const { email, password, role } = req.body;
+        if (!email || !password || !role) {
             return res.status(400).json({ message: "Missing fields" });
         }
 
@@ -23,8 +23,8 @@ router.post("/signup", async (req, res) => {
         const salt = await bcrypt.genSalt(10);
         const hashedPassword = await bcrypt.hash(password, salt);
 
-        // Create new user
-        user = new User({ email, password: hashedPassword });
+        // Create new user with role
+        user = new User({ email, password: hashedPassword, role });
         await user.save();
 
         res.status(201).json({ message: "User registered successfully" });
