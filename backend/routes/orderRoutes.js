@@ -1,5 +1,6 @@
-const express = require('express');
-const Order = require('../models/orderModel'); // Import the order model
+import express from 'express';
+import Order from '../models/orderModel.js'; // Import the order model
+
 const router = express.Router();
 
 // Route to place an order
@@ -30,4 +31,4 @@ router.get('/:userId', async (req, res) => {
     }
 });
 
-module.exports = router;
+export default router; // Use export default for ES module
